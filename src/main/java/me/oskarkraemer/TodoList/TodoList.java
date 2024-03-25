@@ -38,7 +38,7 @@ public class TodoList {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder(String.format("List name: %s\nMarkdown file: %s\n\n[Todos]\n", this.name, this.markdownFile));
+        StringBuilder str = new StringBuilder(String.format("# ToDo: %s\n## List\n", this.name));
 
         for(Todo todo: this.todos) {
             str.append(todo.toString()).append("\n");
