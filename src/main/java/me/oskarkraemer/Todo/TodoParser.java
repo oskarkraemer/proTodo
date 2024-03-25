@@ -1,14 +1,13 @@
 package me.oskarkraemer.Todo;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TodoParser {
     private static final Pattern CHECKBOX_PATTERN = Pattern.compile("^- \\[([x ])] ");
     private static final Pattern SECONDS_PATTERN = Pattern.compile("(\\d+)s");
-    public static Todo parseTodoMarkdown(String markdownTodo) {
+    public static Todo parseMarkdown(String markdownTodo) {
         markdownTodo = markdownTodo.trim();
 
         Matcher checkboxMatcher = CHECKBOX_PATTERN.matcher(markdownTodo);
@@ -21,7 +20,7 @@ public class TodoParser {
         String description = splitString[0].substring(6);
         if(description.isEmpty()) throw new IllegalArgumentException("Invalid todo format: Description must not be empty.");
 
-        if(splitString.length == 1) return new Todo.TodoBuilder(description).build();
+        if(splitString.length == 1) return new Todo.TodoBuilder(description).completed(completed).build();
 
         //Loop through optional arguments and match them respectively
         LocalDateTime createdAt = null;

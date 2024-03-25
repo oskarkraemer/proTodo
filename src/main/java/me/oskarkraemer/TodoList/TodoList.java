@@ -1,4 +1,4 @@
-package me.oskarkraemer;
+package me.oskarkraemer.TodoList;
 
 import me.oskarkraemer.Todo.Todo;
 
@@ -10,14 +10,18 @@ public class TodoList {
     private String markdownFile;
     private final List<Todo> todos;
 
-    public TodoList(String name, String markdownFile) {
+    public TodoList(String name) {
         if(name == null || name.isEmpty()) throw new IllegalArgumentException("Name must not be empty.");
-        if(markdownFile == null || markdownFile.isEmpty()) throw new IllegalArgumentException("A link to a markdown file must be provided.");
 
         this.name = name;
-        this.markdownFile = markdownFile;
-
         this.todos = new ArrayList<>();
+    }
+
+    public TodoList(String name, String markdownFile) {
+        this(name);
+
+        if(markdownFile == null || markdownFile.isEmpty()) throw new IllegalArgumentException("A link to a markdown file must be provided.");
+        this.markdownFile = markdownFile;
     }
 
     public void addTodo(Todo todo) {
