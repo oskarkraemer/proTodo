@@ -60,6 +60,6 @@ public class MainUI extends JFrame{
         // TODO: place custom component creation code here
         tabbedPane1 = new JTabbedPane();
 
-        addTab("Test", new TodoListUI().panel1);
+        addTab("Test", new TodoListUI().jpListPanel);
     }
 }
