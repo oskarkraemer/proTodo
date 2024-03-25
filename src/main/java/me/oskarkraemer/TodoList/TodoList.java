@@ -24,6 +24,14 @@ public class TodoList {
         this.markdownFile = markdownFile;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public List<Todo> getTodos() {
+        return todos;
+    }
+
     public void addTodo(Todo todo) {
         this.todos.add(todo);
     }

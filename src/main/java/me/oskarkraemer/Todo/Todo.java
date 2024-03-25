@@ -2,6 +2,7 @@ package me.oskarkraemer.Todo;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Todo {
     private boolean completed;
@@ -18,8 +19,27 @@ public class Todo {
         this.completed = builder.completed;
     }
 
+    public boolean isCompleted() {
+        return completed;
+    }
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getDue() {
+        return due;
+    }
+
+    public int getTimeBudget() {
+        return timeBudget;
     }
 
     @Override
@@ -45,6 +65,18 @@ public class Todo {
 
         return str;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // Same object
+        if (!(obj instanceof Todo todo2)) return false; // Not a to-do object
+
+        return this.isCompleted() == todo2.isCompleted() &&
+                Objects.equals(this.getDue(), todo2.getDue()) &&
+                this.getDescription().equals(todo2.getDescription()) &&
+                this.getTimeBudget() == todo2.getTimeBudget();
+    }
+
 
     public static class TodoBuilder {
         private boolean completed = false;

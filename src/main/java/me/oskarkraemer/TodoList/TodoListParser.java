@@ -37,7 +37,6 @@ public class TodoListParser {
                 i++;
 
                 for(; i < markdownLines.length; i++) {
-                    System.out.println("Parse ToDo: " + markdownLines[i]);
                     todoList.addTodo(TodoParser.parseMarkdown(markdownLines[i]));
                 }
             }
