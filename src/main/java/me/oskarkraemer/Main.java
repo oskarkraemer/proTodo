@@ -19,5 +19,7 @@ public class Main {
                 "- [x] Cheeseburger");
 
         System.out.println(todoList);
+
+        new MainUI();
     }
 }
