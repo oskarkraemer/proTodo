@@ -53,7 +53,7 @@
           </grid>
         </constraints>
         <properties>
-          <font name="Consolas"/>
+          <font/>
           <model>
             <item value="Daily List"/>
             <item value="ProjectX"/>
