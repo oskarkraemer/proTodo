@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Todo {
+    private boolean completed = false;
     private String description;
     private final LocalDateTime createdAt;
     private LocalDateTime due;
@@ -16,13 +17,17 @@ public class Todo {
         this.timeBudget = builder.timeBudget;
     }
 
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         String createdAtString = this.createdAt.format(formatter);
         String dueString = this.due.format(formatter);
 
-        return String.format("%s [%ds] Due by: %s Created at: %s", this.description, this.timeBudget, dueString, createdAtString);
+        return String.format("- [%s] %s [%ds] Due by: %s Created at: %s", this.completed ? "x": " ", this.description, this.timeBudget, dueString, createdAtString);
     }
 
     public static class TodoBuilder {
