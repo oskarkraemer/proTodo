@@ -14,6 +14,10 @@ public class MainUI extends JFrame{
 
     public MainUI() {
         setTitle("proTodo");
+
+        ImageIcon img = new ImageIcon("pTDIcon.png");
+        setIconImage(img.getImage());
+
         setContentPane(jpMainPanel);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -22,12 +26,11 @@ public class MainUI extends JFrame{
         setVisible(true);
     }
 
-    private void addTab(String title, String content) {
+    private void addTab(String title, JPanel content) {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        JLabel label = new JLabel(content);
-        panel.add(label, BorderLayout.CENTER);
+        panel.add(content, BorderLayout.CENTER);
 
         JButton closeButton = new JButton("X");
         closeButton.setOpaque(false);
@@ -57,6 +60,6 @@ public class MainUI extends JFrame{
         // TODO: place custom component creation code here
         tabbedPane1 = new JTabbedPane();
 
-        addTab("Test", "Content");
+        addTab("Test", new TodoListUI().panel1);
     }
 }

@@ -12,18 +12,6 @@ public class Main {
         FlatDarculaLaf.setup();
         UIManager.getLookAndFeelDefaults().put("defaultFont", new Font("Consolas", Font.PLAIN, 12));
 
-        TodoList todoList = TodoListParser.parseMarkdown("# ToDo: ProjectX\n" +
-                "## Metadata\n" +
-                "Author: mmmmm\n" +
-                "\n" +
-                "## List\n" +
-                "- [ ] Read book | 1200s | Due by: 2025-03-25T20:05:30\n" +
-                "- [ ] Touch grass\n" +
-                "- [x] Exercise | 1500s | Created at: 2024-01-01T12:10:21\n" +
-                "- [x] Cheeseburger");
-
-        System.out.println(todoList);
-
         new MainUI();
     }
 }
