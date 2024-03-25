@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Todo {
-    private boolean completed = false;
+    private boolean completed;
     private String description;
     private final LocalDateTime createdAt;
     private LocalDateTime due;
@@ -79,9 +79,9 @@ public class Todo {
             return todo;
         }
         private void validate(Todo todo) {
-            if(this.description == null || this.description.isEmpty()) throw new IllegalArgumentException("Description must not be empty or null.");
-            if(this.due != null && !this.due.isAfter(this.createdAt)) throw new IllegalArgumentException("Due must lie after createdAt.");
-            if(this.timeBudget < 0) throw new IllegalArgumentException("TimeBudget must not be negative.");
+            if(todo.description == null || todo.description.isEmpty()) throw new IllegalArgumentException("Description must not be empty or null.");
+            if(todo.due != null && !todo.due.isAfter(todo.createdAt)) throw new IllegalArgumentException("Due must lie after createdAt.");
+            if(todo.timeBudget < 0) throw new IllegalArgumentException("TimeBudget must not be negative.");
         }
     }
 }

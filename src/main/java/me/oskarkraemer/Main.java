@@ -1,8 +1,6 @@
 package me.oskarkraemer;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
-import me.oskarkraemer.Todo.Todo;
-import me.oskarkraemer.Todo.TodoParser;
 import me.oskarkraemer.TodoList.TodoList;
 import me.oskarkraemer.TodoList.TodoListParser;
 
