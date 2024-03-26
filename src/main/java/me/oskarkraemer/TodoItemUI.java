@@ -11,6 +11,7 @@ public class TodoItemUI extends JFrame {
     public JLabel jlTodoDueWords;
     public JLabel jlTodoCreated;
     public JLabel jlTodoTimeBudget;
+    private JButton button1;
 
     public JPanel getTodoItemPanel() {
         return this.jpTodoItem;
