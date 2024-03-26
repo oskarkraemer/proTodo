@@ -1,8 +1,6 @@
 package me.oskarkraemer;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
-import me.oskarkraemer.TodoList.TodoList;
-import me.oskarkraemer.TodoList.TodoListParser;
 
 import javax.swing.*;
 import java.awt.*;
