@@ -1,5 +1,8 @@
 package me.oskarkraemer;
 
+import me.oskarkraemer.TodoList.TodoList;
+import me.oskarkraemer.TodoList.TodoListParser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -60,6 +63,16 @@ public class MainUI extends JFrame{
         // TODO: place custom component creation code here
         tabbedPane1 = new JTabbedPane();
 
-        addTab("Test", new TodoListUI().jpListPanel);
+        TodoList todoList = TodoListParser.parseMarkdown("# ToDo: ProjectX\n" +
+                "## Metadata\n" +
+                "Author: mmmmm\n" +
+                "\n" +
+                "## List\n" +
+                "- [ ] Read book | 1200s | Due by: 2025-03-25T20:05:30\n" +
+                "- [ ] Touch grass\n" +
+                "- [x] Exercise | 1500s | Created at: 2024-01-01T12:10:21\n" +
+                "- [x] Cheeseburger");
+
+        addTab("Test", new TodoListUI(todoList.getTodos()).jpListPanel);
     }
 }
