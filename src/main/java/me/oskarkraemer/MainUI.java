@@ -1,12 +1,15 @@
 package me.oskarkraemer;
 
 import me.oskarkraemer.EventListeners.TodoAddedListener;
+import me.oskarkraemer.TodoList.TodoList;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.List;
+import java.util.function.Function;
 
 public class MainUI extends JFrame {
     private JTabbedPane tabbedPane1;
@@ -63,7 +66,7 @@ public class MainUI extends JFrame {
         tabHeader.setOpaque(false);
         tabHeader.add(new JLabel(title));
         tabHeader.add(closeButton);
-        tabbedPane1.addTab(null, panel);
+        tabbedPane1.addTab(title, panel);
         tabbedPane1.setTabComponentAt(tabbedPane1.getTabCount() - 1, tabHeader);
 
         this.tabsPanels.put(title, panel);
@@ -77,15 +80,19 @@ public class MainUI extends JFrame {
         tabPanel.add(newContent, BorderLayout.CENTER);
     }
 
+    public String getSelectedTabTitle() {
+        return tabbedPane1.getTitleAt(tabbedPane1.getSelectedIndex());
+    }
+
     private void createUIComponents() {
         tabbedPane1 = new JTabbedPane();
     }
 
-    public void setTodoAddedListener(TodoAddedListener todoAddedListener) {
+    public void initAddTodoModal(TodoAddedListener todoAddedListener, List<TodoList> todoLists, SelectedTodoListGetter selectedTodoListGetter) {
         this.newTodoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddTodoUI(todoAddedListener);
+                new AddTodoUI(todoAddedListener, todoLists, selectedTodoListGetter.getSelectedTodoList());
             }
         });
     }

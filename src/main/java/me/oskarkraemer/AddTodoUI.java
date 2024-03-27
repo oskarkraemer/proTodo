@@ -2,16 +2,21 @@ package me.oskarkraemer;
 
 import com.raven.datechooser.DateChooser;
 import me.oskarkraemer.EventListeners.TodoAddedListener;
+import me.oskarkraemer.Events.TodoAddedEvent;
 import me.oskarkraemer.Todo.Todo;
+import me.oskarkraemer.TodoList.TodoList;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class AddTodoUI extends JDialog {
     private final TodoAddedListener todoAddedListener;
+    private final List<TodoList> todoLists;
+
     private final Pattern TWELVE_HOUR_PATTERN = Pattern.compile("^(1[0-2]|0?[1-9]):[0-5][0-9]$");
     private final Pattern TWENTYFOUR_HOUR_PATTERN = Pattern.compile("^([01][0-9]|2[0-3]):([0-5][0-9])$");
 
@@ -24,6 +29,7 @@ public class AddTodoUI extends JDialog {
     private JComboBox jcbAMPM;
     private JTextField jtfTimeBudget;
     private JLabel jlErrorMessage;
+    private JComboBox<String> jcbTodoList;
     private final DateChooser dcDateChooser;
 
     private enum ADD_TODO_STATUS {
@@ -34,8 +40,9 @@ public class AddTodoUI extends JDialog {
     }
 
 
-    public AddTodoUI(TodoAddedListener todoAddedListener) {
+    public AddTodoUI(TodoAddedListener todoAddedListener, List<TodoList> todoLists, TodoList selectedTodoList) {
         this.todoAddedListener = todoAddedListener;
+        this.todoLists = todoLists;
 
         setContentPane(contentPane);
         setModal(true);
@@ -47,6 +54,14 @@ public class AddTodoUI extends JDialog {
         dcDateChooser = new DateChooser();
         dcDateChooser.setTextField(jtfDue);
         dcDateChooser.clearDate();
+
+        //Add all available to-do lists
+        for(TodoList todoList : todoLists) {
+            jcbTodoList.addItem(todoList.getName());
+        }
+
+        //Select the currently selected to-do list panel
+        jcbTodoList.setSelectedItem(selectedTodoList.getName());
 
         buttonADD.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -121,7 +136,7 @@ public class AddTodoUI extends JDialog {
                 .timeBudget(timeBudget)
                 .build();
 
-        this.todoAddedListener.todoAdded(addedTodo);
+        this.todoAddedListener.todoAdded(new TodoAddedEvent(addedTodo, this.todoLists.get(this.jcbTodoList.getSelectedIndex())));
         dispose();
 
         return ADD_TODO_STATUS.OK;

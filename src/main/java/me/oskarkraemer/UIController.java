@@ -1,12 +1,13 @@
 package me.oskarkraemer;
 
 import me.oskarkraemer.EventListeners.TodoAddedListener;
+import me.oskarkraemer.Events.TodoAddedEvent;
 import me.oskarkraemer.Todo.Todo;
 import me.oskarkraemer.TodoList.TodoList;
 
 import java.util.List;
 
-public class UIController implements TodoAddedListener {
+public class UIController implements TodoAddedListener, SelectedTodoListGetter {
     private final MainUI mainUI;
     private final List<TodoList> todoLists;
 
@@ -14,21 +15,36 @@ public class UIController implements TodoAddedListener {
         this.todoLists = todoLists;
         this.mainUI = mainUI;
 
-        this.mainUI.setTodoAddedListener(this);
+        this.mainUI.initAddTodoModal(this, todoLists, this);
 
-        this.mainUI.addTab("TestList", new TodoListUI(this.todoLists.get(0).getTodos()).jpListPanel);
+        this.mainUI.addTab("ProjectX", new TodoListUI(this.todoLists.get(0).getTodos()).jpListPanel);
 
         TodoList tl = this.todoLists.get(0);
         tl.addTodo(new Todo.TodoBuilder("Hello").build());
         this.todoLists.set(0, tl);
 
-        this.mainUI.updateTab("TestList", new TodoListUI(this.todoLists.get(0).getTodos()).jpListPanel);
+        this.mainUI.updateTab("ProjectX", new TodoListUI(this.todoLists.get(0).getTodos()).jpListPanel);
+    }
+
+    public TodoList getSelectedTodoList() {
+        String selectedTabTitle = mainUI.getSelectedTabTitle();
+        for(TodoList todoList : this.todoLists) {
+            if(todoList.getName().equals(selectedTabTitle)) {
+                return todoList;
+            }
+        }
+
+        return null;
     }
 
     @Override
-    public void todoAdded(Todo addedTodo) {
+    public void todoAdded(TodoAddedEvent todoAddedEvent) {
+        Todo addedTodo = todoAddedEvent.getAddedTodo();
+
+        System.out.println("Added todo in list: " + todoAddedEvent.getTodoListAddedTo().getName());
         System.out.println(addedTodo.getDescription());
         System.out.println(addedTodo.getDue());
         System.out.println(addedTodo.getTimeBudget());
+
     }
 }

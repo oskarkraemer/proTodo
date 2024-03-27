@@ -1,9 +1,9 @@
 package me.oskarkraemer.EventListeners;
 
-import me.oskarkraemer.Todo.Todo;
+import me.oskarkraemer.Events.TodoAddedEvent;
 
 import java.util.EventListener;
 
 public interface TodoAddedListener extends EventListener {
-    void todoAdded(Todo addedTodo);
+    void todoAdded(TodoAddedEvent todoAddedEvent);
 }
