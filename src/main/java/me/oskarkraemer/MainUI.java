@@ -24,6 +24,8 @@ public class MainUI extends JFrame{
 
         setContentPane(jpMainPanel);
 
+        jlTodoLists.setFixedCellHeight(30);
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1200, 700);
         setLocationRelativeTo(null);
