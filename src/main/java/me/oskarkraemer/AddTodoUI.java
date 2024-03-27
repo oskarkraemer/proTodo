@@ -87,7 +87,7 @@ public class AddTodoUI extends JDialog {
     }
 
     private ADD_TODO_STATUS tryAdd() {
-        if(this.jtfDescription.getText().isEmpty()) return ADD_TODO_STATUS.MISSING_REQUIRED_FIELDS;
+        if(this.jtfDescription.getText().trim().isEmpty()) return ADD_TODO_STATUS.MISSING_REQUIRED_FIELDS;
         if(!this.jtfDueTime.getText().isEmpty() && !TWELVE_HOUR_PATTERN.matcher(this.jtfDueTime.getText()).matches()) return ADD_TODO_STATUS.WRONG_TIME_FORMAT;
 
         LocalDateTime dueDatetime = null;
@@ -95,8 +95,7 @@ public class AddTodoUI extends JDialog {
             LocalDateTime dueDate;
             dueDate = this.dcDateChooser.getSelectedDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-            int hour = 0;
-            int minute = 0;
+            int hour = 0, minute = 0;
 
             if(!this.jtfDueTime.getText().isEmpty()) {
                 String[] timeSplit = this.jtfDueTime.getText().split(":");
@@ -117,7 +116,10 @@ public class AddTodoUI extends JDialog {
             timeBudget = Integer.parseInt(timeBudgetStr);
         }
 
-        Todo addedTodo = new Todo.TodoBuilder(this.jtfDescription.getText()).due(dueDatetime).timeBudget(timeBudget).build();
+        Todo addedTodo = new Todo.TodoBuilder(this.jtfDescription.getText())
+                .due(dueDatetime)
+                .timeBudget(timeBudget)
+                .build();
 
         this.todoAddedListener.todoAdded(addedTodo);
         dispose();
