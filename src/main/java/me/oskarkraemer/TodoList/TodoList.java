@@ -2,6 +2,11 @@ package me.oskarkraemer.TodoList;
 
 import me.oskarkraemer.Todo.Todo;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,5 +50,15 @@ public class TodoList {
         }
 
         return str.toString();
+    }
+
+    public static TodoList readFromFile(String filePath) throws IOException {
+        Path path = Paths.get(filePath);
+
+        byte[] bytes = Files.readAllBytes(path);
+        List<String> allLines = Files.readAllLines(path, StandardCharsets.UTF_8);
+        String linesString = String.join("\n", allLines);
+
+        return TodoListParser.parseMarkdown(linesString);
     }
 }

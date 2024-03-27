@@ -46,7 +46,7 @@
         <border type="none"/>
         <children/>
       </tabbedpane>
-      <component id="8b18e" class="javax.swing.JList" binding="list1" default-binding="true">
+      <component id="8b18e" class="javax.swing.JList" binding="jlTodoLists">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="8" fill="2" indent="0" use-parent-layout="false">
             <preferred-size width="250" height="50"/>

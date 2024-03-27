@@ -1,19 +1,19 @@
 package me.oskarkraemer;
 
-import me.oskarkraemer.TodoList.TodoList;
-import me.oskarkraemer.TodoList.TodoListParser;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 public class MainUI extends JFrame{
     private JTabbedPane tabbedPane1;
     private JPanel jpMainPanel;
     private JButton openListButton;
     private JButton aboutButton;
-    private JList list1;
+    private JList jlTodoLists;
+
+    private final HashMap<String, JPanel> tabsPanels;
 
     public MainUI() {
         setTitle("proTodo");
@@ -27,9 +27,11 @@ public class MainUI extends JFrame{
         setSize(1200, 700);
         setLocationRelativeTo(null);
         setVisible(true);
+
+        this.tabsPanels = new HashMap<>();
     }
 
-    private void addTab(String title, JPanel content) {
+    public void addTab(String title, JPanel content) {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
@@ -57,22 +59,19 @@ public class MainUI extends JFrame{
         tabHeader.add(closeButton);
         tabbedPane1.addTab(null, panel);
         tabbedPane1.setTabComponentAt(tabbedPane1.getTabCount() - 1, tabHeader);
+
+        this.tabsPanels.put(title, panel);
+    }
+
+    public void updateTab(String title, JPanel newContent) {
+        JPanel tabPanel = this.tabsPanels.get(title);
+        if(tabPanel == null) throw new IllegalArgumentException("Tab of title '" + title + "' could not be found.");
+
+        tabPanel.removeAll();
+        tabPanel.add(newContent, BorderLayout.CENTER);
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
         tabbedPane1 = new JTabbedPane();
-
-        TodoList todoList = TodoListParser.parseMarkdown("# ToDo: ProjectX\n" +
-                "## Metadata\n" +
-                "Author: mmmmm\n" +
-                "\n" +
-                "## List\n" +
-                "- [ ] Read book | 1200s | Due by: 2025-03-25T20:05:30\n" +
-                "- [ ] Touch grass\n" +
-                "- [x] Exercise | 1500s | Created at: 2024-01-01T12:10:21\n" +
-                "- [x] Cheeseburger");
-
-        addTab("Test", new TodoListUI(todoList.getTodos()).jpListPanel);
     }
 }
