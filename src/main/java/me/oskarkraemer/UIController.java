@@ -3,7 +3,6 @@ package me.oskarkraemer;
 import me.oskarkraemer.EventListeners.TodoAddedListener;
 import me.oskarkraemer.Todo.Todo;
 import me.oskarkraemer.TodoList.TodoList;
-import me.oskarkraemer.TodoList.TodoListParser;
 
 import java.util.List;
 

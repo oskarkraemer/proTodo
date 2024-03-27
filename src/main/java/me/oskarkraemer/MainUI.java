@@ -1,7 +1,6 @@
 package me.oskarkraemer;
 
 import me.oskarkraemer.EventListeners.TodoAddedListener;
-import me.oskarkraemer.Todo.Todo;
 
 import javax.swing.*;
 import java.awt.*;
