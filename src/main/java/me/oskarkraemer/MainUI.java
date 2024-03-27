@@ -13,6 +13,7 @@ public class MainUI extends JFrame{
     private JButton aboutButton;
     private JList jlTodoLists;
     private JButton newListButton;
+    private JButton newTodoButton;
 
     private final HashMap<String, JPanel> tabsPanels;
 
@@ -32,6 +33,11 @@ public class MainUI extends JFrame{
         setVisible(true);
 
         this.tabsPanels = new HashMap<>();
+        newTodoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AddTodoUI();            }
+        });
     }
 
     public void addTab(String title, JPanel content) {

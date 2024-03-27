@@ -1,0 +1,2 @@
+### Build
+- Install `/libraries/datechooser-swing-1.4.1.jar` in local Maven repository using `mvn install:install-file -Dfile=<filepath> -DgroupId=com.raven -DartifactId=datechooser -Dversion=1.4.1 -Dpackaging=jar`

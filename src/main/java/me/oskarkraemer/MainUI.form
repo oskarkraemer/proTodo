@@ -34,6 +34,12 @@
               <text value="Open List"/>
             </properties>
           </component>
+          <component id="848e4" class="javax.swing.JButton" binding="newTodoButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="New Todo"/>
+            </properties>
+          </component>
           <component id="5a086" class="javax.swing.JButton" binding="aboutButton" default-binding="true">
             <constraints/>
             <properties>
