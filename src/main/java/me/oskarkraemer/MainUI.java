@@ -1,12 +1,15 @@
 package me.oskarkraemer;
 
+import me.oskarkraemer.EventListeners.TodoAddedListener;
+import me.oskarkraemer.Todo.Todo;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class MainUI extends JFrame{
+public class MainUI extends JFrame {
     private JTabbedPane tabbedPane1;
     private JPanel jpMainPanel;
     private JButton openListButton;
@@ -17,7 +20,7 @@ public class MainUI extends JFrame{
 
     private final HashMap<String, JPanel> tabsPanels;
 
-    public MainUI() {
+    public MainUI(){
         setTitle("proTodo");
 
         ImageIcon img = new ImageIcon("pTDIcon.png");
@@ -33,11 +36,6 @@ public class MainUI extends JFrame{
         setVisible(true);
 
         this.tabsPanels = new HashMap<>();
-        newTodoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new AddTodoUI();            }
-        });
     }
 
     public void addTab(String title, JPanel content) {
@@ -82,5 +80,14 @@ public class MainUI extends JFrame{
 
     private void createUIComponents() {
         tabbedPane1 = new JTabbedPane();
+    }
+
+    public void setTodoAddedListener(TodoAddedListener todoAddedListener) {
+        this.newTodoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AddTodoUI(todoAddedListener);
+            }
+        });
     }
 }
