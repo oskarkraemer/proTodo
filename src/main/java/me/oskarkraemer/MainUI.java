@@ -12,6 +12,7 @@ public class MainUI extends JFrame{
     private JButton openListButton;
     private JButton aboutButton;
     private JList jlTodoLists;
+    private JButton newListButton;
 
     private final HashMap<String, JPanel> tabsPanels;
 

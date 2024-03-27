@@ -22,6 +22,12 @@
         </properties>
         <border type="none"/>
         <children>
+          <component id="15037" class="javax.swing.JButton" binding="newListButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="New List"/>
+            </properties>
+          </component>
           <component id="eab6a" class="javax.swing.JButton" binding="openListButton" default-binding="true">
             <constraints/>
             <properties>
