@@ -66,11 +66,7 @@
         </constraints>
         <properties>
           <font/>
-          <model>
-            <item value="Daily List"/>
-            <item value="ProjectX"/>
-            <item value="Shopping"/>
-          </model>
+          <model/>
         </properties>
       </component>
     </children>

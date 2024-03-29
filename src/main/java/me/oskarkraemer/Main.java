@@ -15,13 +15,6 @@ public class Main {
         UIManager.getLookAndFeelDefaults().put("defaultFont", new Font("Consolas", Font.PLAIN, 12));
 
         MainUI mainUI = new MainUI();
-        List<TodoList> todoLists = new ArrayList<>();
-        try {
-            todoLists.add(TodoList.readFromFile("./test.md"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        UIController controller = new UIController(todoLists, mainUI);
+        UIController controller = new UIController(new ArrayList<>(), mainUI);
     }
 }

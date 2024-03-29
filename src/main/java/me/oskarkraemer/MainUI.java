@@ -1,12 +1,17 @@
 package me.oskarkraemer;
 
 import me.oskarkraemer.EventListeners.TodoAddedListener;
+import me.oskarkraemer.EventListeners.TodoListAddedListener;
 import me.oskarkraemer.TodoList.TodoList;
+import me.oskarkraemer.TodoList.TodoListParser;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
@@ -91,11 +96,30 @@ public class MainUI extends JFrame {
         tabbedPane1 = new JTabbedPane();
     }
 
-    public void initAddTodoModal(TodoAddedListener todoAddedListener, List<TodoList> todoLists, SelectedTodoListGetter selectedTodoListGetter) {
+    public void initAddTodoModal(TodoAddedListener todoAddedListener, TodoListAddedListener todoListAddedListener, List<TodoList> todoLists, SelectedTodoListGetter selectedTodoListGetter) {
         this.newTodoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new AddTodoUI(todoAddedListener, todoLists, selectedTodoListGetter.getSelectedTodoList());
+            }
+        });
+
+        this.openListButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(new FileNameExtensionFilter("Markdown file", "md"));
+                fileChooser.setCurrentDirectory(new File("W:\\Java\\protodo\\"));
+
+                int result = fileChooser.showOpenDialog(jpMainPanel);
+                if(result == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        todoListAddedListener.todoListAdded(TodoList.readFromFile(fileChooser.getSelectedFile().getAbsolutePath()));
+                    } catch (Exception exception) {
+                        JOptionPane.showMessageDialog(jpMainPanel, "Error reading ToDo list file:\n" + exception.getMessage(),
+                                "An error occurred!", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
         });
     }

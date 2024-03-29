@@ -1,13 +1,14 @@
 package me.oskarkraemer;
 
 import me.oskarkraemer.EventListeners.TodoAddedListener;
+import me.oskarkraemer.EventListeners.TodoListAddedListener;
 import me.oskarkraemer.Events.TodoAddedEvent;
 import me.oskarkraemer.Todo.Todo;
 import me.oskarkraemer.TodoList.TodoList;
 
 import java.util.List;
 
-public class UIController implements TodoAddedListener, SelectedTodoListGetter {
+public class UIController implements TodoAddedListener, TodoListAddedListener, SelectedTodoListGetter {
     private final MainUI mainUI;
     private final List<TodoList> todoLists;
 
@@ -15,15 +16,7 @@ public class UIController implements TodoAddedListener, SelectedTodoListGetter {
         this.todoLists = todoLists;
         this.mainUI = mainUI;
 
-        this.mainUI.initAddTodoModal(this, todoLists, this);
-
-        this.mainUI.addTab("ProjectX", new TodoListUI(this.todoLists.get(0).getTodos()).jpListPanel);
-
-        TodoList tl = this.todoLists.get(0);
-        tl.addTodo(new Todo.TodoBuilder("Hello").build());
-        this.todoLists.set(0, tl);
-
-        this.mainUI.updateTab("ProjectX", new TodoListUI(this.todoLists.get(0).getTodos()).jpListPanel);
+        this.mainUI.initAddTodoModal(this, this, todoLists, this);
     }
 
     public TodoList getSelectedTodoList() {
@@ -47,14 +40,18 @@ public class UIController implements TodoAddedListener, SelectedTodoListGetter {
         System.out.println(addedTodo.getDue());
         System.out.println(addedTodo.getTimeBudget());
 
-        for(int i = 0; i < this.todoLists.size(); i++) {
-            TodoList todoList = this.todoLists.get(i);
-
-            if(todoList.getName().equals(todoListAddedTo.getName())) {
+        for (TodoList todoList : this.todoLists) {
+            if (todoList.getName().equals(todoListAddedTo.getName())) {
                 todoList.addTodo(addedTodo);
             }
         }
 
         this.mainUI.updateTab(todoListAddedTo.getName(), new TodoListUI(todoListAddedTo.getTodos()).jpListPanel);
+    }
+
+    @Override
+    public void todoListAdded(TodoList todoListAdded) {
+        this.todoLists.add(todoListAdded);
+        this.mainUI.addTab(todoListAdded.getName(), new TodoListUI(todoListAdded.getTodos()).jpListPanel);
     }
 }

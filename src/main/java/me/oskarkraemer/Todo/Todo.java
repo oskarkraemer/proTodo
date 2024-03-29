@@ -87,7 +87,6 @@ public class Todo {
 
         public TodoBuilder(String description) {
             this.description = description;
-            this.createdAt = LocalDateTime.now();
         }
         public TodoBuilder due(LocalDateTime due) {
             this.due = due;
@@ -98,7 +97,7 @@ public class Todo {
             return this;
         }
         public TodoBuilder createdAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt != null ? createdAt : this.createdAt;
+            this.createdAt = createdAt;
             return this;
         }
         public TodoBuilder completed(boolean completed) {
@@ -112,7 +111,7 @@ public class Todo {
         }
         private void validate(Todo todo) {
             if(todo.description == null || todo.description.isEmpty()) throw new IllegalArgumentException("Description must not be empty or null.");
-            if(todo.due != null && !todo.due.isAfter(todo.createdAt)) throw new IllegalArgumentException("Due must lie after createdAt.");
+            if(todo.due != null && todo.createdAt != null && !todo.due.isAfter(todo.createdAt)) throw new IllegalArgumentException("Due must lie after createdAt.");
             if(todo.timeBudget < 0) throw new IllegalArgumentException("TimeBudget must not be negative.");
         }
     }

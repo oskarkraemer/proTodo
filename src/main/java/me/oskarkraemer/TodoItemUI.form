@@ -77,15 +77,6 @@
           <visible value="true"/>
         </properties>
       </component>
-      <component id="aea1b" class="javax.swing.JLabel" binding="jlTodoDueWords">
-        <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="Consolas" style="1"/>
-          <text value="(2 days)"/>
-        </properties>
-      </component>
       <component id="dfc82" class="javax.swing.JLabel" binding="jlTodoDue">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="4" hsize-policy="0" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
@@ -99,6 +90,15 @@
           <grid row="3" column="0" row-span="1" col-span="6" vsize-policy="2" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
+      </component>
+      <component id="aea1b" class="javax.swing.JLabel" binding="jlTodoDueWords">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Consolas" style="1"/>
+          <text value="(2 days)"/>
+        </properties>
       </component>
     </children>
   </grid>
