@@ -39,7 +39,7 @@ public class TodoItemUI extends JFrame {
             return;
         }
 
-        this.jlTodoDue.setText("Due: " + due.format(DateTimeFormatter.ofPattern("MM.dd.yyyy hh:mm")));
+        this.jlTodoDue.setText("Due: " + due.format(DateTimeFormatter.ofPattern("MM.dd.yyyy HH:mm")));
 
         LocalDateTime now = LocalDateTime.now();
         long monthsUntil = now.until(due, ChronoUnit.MONTHS);

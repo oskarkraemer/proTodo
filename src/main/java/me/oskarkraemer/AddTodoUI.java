@@ -103,7 +103,7 @@ public class AddTodoUI extends JDialog {
 
     private ADD_TODO_STATUS tryAdd() {
         if(this.jtfDescription.getText().trim().isEmpty()) return ADD_TODO_STATUS.MISSING_REQUIRED_FIELDS;
-        if(!this.jtfDueTime.getText().isEmpty() && !TWELVE_HOUR_PATTERN.matcher(this.jtfDueTime.getText()).matches()) return ADD_TODO_STATUS.WRONG_TIME_FORMAT;
+        if(!this.jtfDueTime.getText().isEmpty() && !TWENTYFOUR_HOUR_PATTERN.matcher(this.jtfDueTime.getText()).matches()) return ADD_TODO_STATUS.WRONG_TIME_FORMAT;
 
         LocalDateTime dueDatetime = null;
         if(this.dcDateChooser.isDateSelected()) {
@@ -120,7 +120,7 @@ public class AddTodoUI extends JDialog {
 
             dueDatetime = LocalDateTime.of(dueDate.getYear(), dueDate.getMonth(), dueDate.getDayOfMonth(), hour, minute);
 
-            if(!dueDate.isAfter(LocalDateTime.now())) return ADD_TODO_STATUS.DUE_BEFORE_NOW;
+            if(!dueDatetime.isAfter(LocalDateTime.now())) return ADD_TODO_STATUS.DUE_BEFORE_NOW;
         }
 
         int timeBudget = 0;
