@@ -23,8 +23,6 @@ public class TodoListUI extends JFrame {
             Todo todo = todos.get(i);
             TodoItemUI todoItemUI = new TodoItemUI(todo);
 
-            System.out.println("Adding: " + todo.getDescription() + " | " + i);
-
             todoItemUIS.add(todoItemUI);
             jpListPanel.add(todoItemUIS.get(i).getTodoItemPanel(), 0, i);
         }
