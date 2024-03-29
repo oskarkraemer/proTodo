@@ -30,6 +30,7 @@ public class AddTodoUI extends JDialog {
     private JTextField jtfTimeBudget;
     private JLabel jlErrorMessage;
     private JComboBox<String> jcbTodoList;
+    private JCheckBox jcbIncludeCreationDate;
     private final DateChooser dcDateChooser;
 
     private enum ADD_TODO_STATUS {
@@ -134,6 +135,7 @@ public class AddTodoUI extends JDialog {
         Todo addedTodo = new Todo.TodoBuilder(this.jtfDescription.getText())
                 .due(dueDatetime)
                 .timeBudget(timeBudget)
+                .createdAt(this.jcbIncludeCreationDate.isSelected() ? LocalDateTime.now() : null)
                 .build();
 
         this.todoAddedListener.todoAdded(new TodoAddedEvent(addedTodo, this.todoLists.get(this.jcbTodoList.getSelectedIndex())));
