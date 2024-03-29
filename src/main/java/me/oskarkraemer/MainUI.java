@@ -78,6 +78,9 @@ public class MainUI extends JFrame {
 
         tabPanel.removeAll();
         tabPanel.add(newContent, BorderLayout.CENTER);
+
+        tabPanel.validate();
+        tabPanel.repaint();
     }
 
     public String getSelectedTabTitle() {

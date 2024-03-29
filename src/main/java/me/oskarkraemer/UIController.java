@@ -40,11 +40,21 @@ public class UIController implements TodoAddedListener, SelectedTodoListGetter {
     @Override
     public void todoAdded(TodoAddedEvent todoAddedEvent) {
         Todo addedTodo = todoAddedEvent.getAddedTodo();
+        TodoList todoListAddedTo = todoAddedEvent.getTodoListAddedTo();
 
-        System.out.println("Added todo in list: " + todoAddedEvent.getTodoListAddedTo().getName());
+        System.out.println("Added todo in list: " + todoListAddedTo.getName());
         System.out.println(addedTodo.getDescription());
         System.out.println(addedTodo.getDue());
         System.out.println(addedTodo.getTimeBudget());
 
+        for(int i = 0; i < this.todoLists.size(); i++) {
+            TodoList todoList = this.todoLists.get(i);
+
+            if(todoList.getName().equals(todoListAddedTo.getName())) {
+                todoList.addTodo(addedTodo);
+            }
+        }
+
+        this.mainUI.updateTab(todoListAddedTo.getName(), new TodoListUI(todoListAddedTo.getTodos()).jpListPanel);
     }
 }
