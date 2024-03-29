@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class TodoParser {
     private static final Pattern CHECKBOX_PATTERN = Pattern.compile("^- \\[([x ])] ");
-    private static final Pattern SECONDS_PATTERN = Pattern.compile("(\\d+)s");
+    private static final Pattern MINUTES_PATTERN = Pattern.compile("(\\d+)m");
     public static Todo parseMarkdown(String markdownTodo) {
         markdownTodo = markdownTodo.trim();
 
@@ -29,13 +29,13 @@ public class TodoParser {
 
         for(int i = 1; i < splitString.length; i++) {
             //Set timeBudget if available
-            Matcher secondsMatcher = SECONDS_PATTERN.matcher(splitString[i]);
-            if(secondsMatcher.matches()) {
-                String numberGroup = secondsMatcher.group(1);
+            Matcher minutesMatcher = MINUTES_PATTERN.matcher(splitString[i]);
+            if(minutesMatcher.matches()) {
+                String numberGroup = minutesMatcher.group(1);
                 try {
                     timeBudget = Integer.parseInt(numberGroup);
                 } catch (NumberFormatException e) {
-                    System.out.println("[MDP]: Could not parse seconds - " + e);
+                    System.out.println("[MDP]: Could not parse minutes - " + e);
                 }
             }
 

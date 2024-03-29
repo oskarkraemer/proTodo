@@ -52,7 +52,7 @@ public class Todo {
         String str = String.format("- [%s] %s", this.completed ? "x": " ", this.description);
 
         if(timeBudget > 0) {
-            str += String.format(" | %ds", this.timeBudget);
+            str += String.format(" | %dm", this.timeBudget);
         }
 
         if(!dueString.isEmpty()) {

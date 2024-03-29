@@ -84,7 +84,7 @@ public class TodoItemUI extends JFrame {
             return;
         }
 
-        this.jlTodoTimeBudget.setText(Math.round((float) timeBudget / 60) + "min");
+        this.jlTodoTimeBudget.setText(timeBudget + "min");
     }
 
     public JPanel getTodoItemPanel() {

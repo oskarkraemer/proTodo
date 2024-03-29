@@ -12,8 +12,8 @@ class TodoParserTest {
     @DisplayName("Parse a ToDo markdown string.")
     void parseMarkdown() {
         // - [ ] Read book | 1200s | Due by: 2025-03-25T20:05:30
-        Todo targetTodo1 = new Todo.TodoBuilder("Read book").timeBudget(1200).due(LocalDateTime.parse("2025-03-25T20:05:30")).build();
-        Todo parsedTodo1 = TodoParser.parseMarkdown("- [ ] Read book | 1200s | Due by: 2025-03-25T20:05:30");
+        Todo targetTodo1 = new Todo.TodoBuilder("Read book").timeBudget(20).due(LocalDateTime.parse("2025-03-25T20:05:30")).build();
+        Todo parsedTodo1 = TodoParser.parseMarkdown("- [ ] Read book | 20m | Due by: 2025-03-25T20:05:30");
 
         assertEquals(targetTodo1, parsedTodo1);
 
@@ -30,8 +30,8 @@ class TodoParserTest {
         assertEquals(targetTodo3, parsedTodo3);
 
         // - [ ] Read book | Created at: 2024-03-25T20:05:30 | 1200s | Due by: 2025-03-25T20:05:30
-        Todo targetTodo4 = new Todo.TodoBuilder("Read book").timeBudget(1200).due(LocalDateTime.parse("2025-03-25T20:05:30")).createdAt(LocalDateTime.parse("2024-03-25T20:05:30")).build();
-        Todo parsedTodo4 = TodoParser.parseMarkdown("- [ ] Read book | Created at: 2024-03-25T20:05:30 | 1200s | Due by: 2025-03-25T20:05:30");
+        Todo targetTodo4 = new Todo.TodoBuilder("Read book").timeBudget(20).due(LocalDateTime.parse("2025-03-25T20:05:30")).createdAt(LocalDateTime.parse("2024-03-25T20:05:30")).build();
+        Todo parsedTodo4 = TodoParser.parseMarkdown("- [ ] Read book | Created at: 2024-03-25T20:05:30 | 20m | Due by: 2025-03-25T20:05:30");
 
         assertEquals(targetTodo4, parsedTodo4);
     }

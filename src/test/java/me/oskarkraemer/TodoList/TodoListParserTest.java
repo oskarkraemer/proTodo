@@ -17,7 +17,7 @@ class TodoListParserTest {
         TodoList targetTodoList = new TodoList("ProjectX");
 
         Todo todo1 = new Todo.TodoBuilder("Read book")
-                .timeBudget(1200)
+                .timeBudget(20)
                 .due(LocalDateTime.parse("2025-03-25T20:05:30"))
                 .build();
 
@@ -25,7 +25,7 @@ class TodoListParserTest {
                 .build();
 
         Todo todo3 = new Todo.TodoBuilder("Exercise")
-                .timeBudget(1500)
+                .timeBudget(25)
                 .createdAt(LocalDateTime.parse("2024-01-01T12:10:21"))
                 .completed(true)
                 .build();
@@ -44,9 +44,9 @@ class TodoListParserTest {
                 "Author: xxxxxx\n" +
                 "\n" +
                 "## List\n" +
-                "- [ ] Read book | 1200s | Due by: 2025-03-25T20:05:30\n" +
+                "- [ ] Read book | 20m | Due by: 2025-03-25T20:05:30\n" +
                 "- [ ] Touch grass\n" +
-                "- [x] Exercise | 1500s | Created at: 2024-01-01T12:10:21\n" +
+                "- [x] Exercise | 25m | Created at: 2024-01-01T12:10:21\n" +
                 "- [x] Cheeseburger");
 
         assertEquals(targetTodoList.getName(), parsedTodoList.getName());
