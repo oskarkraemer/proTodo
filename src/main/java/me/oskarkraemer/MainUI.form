@@ -22,25 +22,26 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="15037" class="javax.swing.JButton" binding="newListButton" default-binding="true">
+          <component id="15037" class="javax.swing.JButton" binding="jbNewList">
             <constraints/>
             <properties>
               <text value="New List"/>
             </properties>
           </component>
-          <component id="eab6a" class="javax.swing.JButton" binding="openListButton" default-binding="true">
+          <component id="eab6a" class="javax.swing.JButton" binding="jbOpenList">
             <constraints/>
             <properties>
               <text value="Open List"/>
             </properties>
           </component>
-          <component id="848e4" class="javax.swing.JButton" binding="newTodoButton" default-binding="true">
+          <component id="848e4" class="javax.swing.JButton" binding="jbNewTodo">
             <constraints/>
             <properties>
+              <enabled value="false"/>
               <text value="New Todo"/>
             </properties>
           </component>
-          <component id="5a086" class="javax.swing.JButton" binding="aboutButton" default-binding="true">
+          <component id="5a086" class="javax.swing.JButton" binding="jbAbout">
             <constraints/>
             <properties>
               <text value="About"/>

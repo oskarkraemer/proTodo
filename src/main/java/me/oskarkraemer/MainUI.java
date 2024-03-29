@@ -3,7 +3,6 @@ package me.oskarkraemer;
 import me.oskarkraemer.EventListeners.TodoAddedListener;
 import me.oskarkraemer.EventListeners.TodoListAddedListener;
 import me.oskarkraemer.TodoList.TodoList;
-import me.oskarkraemer.TodoList.TodoListParser;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -11,19 +10,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
 
 public class MainUI extends JFrame {
     private JTabbedPane tabbedPane1;
     private JPanel jpMainPanel;
-    private JButton openListButton;
-    private JButton aboutButton;
+    private JButton jbOpenList;
+    private JButton jbAbout;
     private JList jlTodoLists;
-    private JButton newListButton;
-    private JButton newTodoButton;
+    private JButton jbNewList;
+    private JButton jbNewTodo;
 
     private final HashMap<String, JPanel> tabsPanels;
 
@@ -64,6 +61,8 @@ public class MainUI extends JFrame {
                 if (index != -1) {
                     tabbedPane1.removeTabAt(index);
                 }
+
+                jbNewTodo.setEnabled(tabbedPane1.getTabCount() > 0);
             }
         });
 
@@ -73,6 +72,8 @@ public class MainUI extends JFrame {
         tabHeader.add(closeButton);
         tabbedPane1.addTab(title, panel);
         tabbedPane1.setTabComponentAt(tabbedPane1.getTabCount() - 1, tabHeader);
+
+        this.jbNewTodo.setEnabled(tabbedPane1.getTabCount() > 0);
 
         this.tabsPanels.put(title, panel);
     }
@@ -97,14 +98,14 @@ public class MainUI extends JFrame {
     }
 
     public void initAddTodoModal(TodoAddedListener todoAddedListener, TodoListAddedListener todoListAddedListener, List<TodoList> todoLists, SelectedTodoListGetter selectedTodoListGetter) {
-        this.newTodoButton.addActionListener(new ActionListener() {
+        this.jbNewTodo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new AddTodoUI(todoAddedListener, todoLists, selectedTodoListGetter.getSelectedTodoList());
             }
         });
 
-        this.openListButton.addActionListener(new ActionListener() {
+        this.jbOpenList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
