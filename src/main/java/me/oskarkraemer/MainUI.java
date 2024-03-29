@@ -109,7 +109,7 @@ public class MainUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setFileFilter(new FileNameExtensionFilter("Markdown file", "md"));
-                fileChooser.setCurrentDirectory(new File("W:\\Java\\protodo\\"));
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
 
                 int result = fileChooser.showOpenDialog(jpMainPanel);
                 if(result == JFileChooser.APPROVE_OPTION) {
