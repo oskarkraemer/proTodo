@@ -19,12 +19,14 @@ public class TodoListUI extends JFrame {
 
         jpListPanel.setLayout(new GridLayout(50, 1));
 
-        for(int i = 0; i < todos.size(); i++) {
+        for(int i =  0; i < todos.size(); i++) {
             Todo todo = todos.get(i);
             TodoItemUI todoItemUI = new TodoItemUI(todo);
 
+            System.out.println("Adding: " + todo.getDescription() + " | " + i);
+
             todoItemUIS.add(todoItemUI);
-            jpListPanel.add(todoItemUIS.get(i).getTodoItemPanel(), i, 0);
+            jpListPanel.add(todoItemUIS.get(i).getTodoItemPanel(), 0, i);
         }
     }
 }
