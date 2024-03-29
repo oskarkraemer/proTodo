@@ -6,6 +6,8 @@ import me.oskarkraemer.Events.TodoAddedEvent;
 import me.oskarkraemer.Todo.Todo;
 import me.oskarkraemer.TodoList.TodoList;
 
+import javax.swing.*;
+import java.io.IOException;
 import java.util.List;
 
 public class UIController implements TodoAddedListener, TodoListAddedListener, SelectedTodoListGetter {
@@ -40,10 +42,12 @@ public class UIController implements TodoAddedListener, TodoListAddedListener, S
         System.out.println(addedTodo.getDue());
         System.out.println(addedTodo.getTimeBudget());
 
-        for (TodoList todoList : this.todoLists) {
-            if (todoList.getName().equals(todoListAddedTo.getName())) {
-                todoList.addTodo(addedTodo);
-            }
+        todoListAddedTo.addTodo(addedTodo);
+        try {
+            todoListAddedTo.saveToFile();
+        } catch (IOException exception) {
+            JOptionPane.showMessageDialog(this.mainUI, "Error saving changes:\n" + exception.getMessage(),
+                    "An error occurred!", JOptionPane.ERROR_MESSAGE);
         }
 
         this.mainUI.updateTab(todoListAddedTo.getName(), new TodoListUI(todoListAddedTo.getTodos()).jpListPanel);

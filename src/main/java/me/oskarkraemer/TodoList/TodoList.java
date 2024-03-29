@@ -2,7 +2,10 @@ package me.oskarkraemer.TodoList;
 
 import me.oskarkraemer.Todo.Todo;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,8 +48,12 @@ public class TodoList {
     public String toString() {
         StringBuilder str = new StringBuilder(String.format("# ToDo: %s\n## List\n", this.name));
 
-        for(Todo todo: this.todos) {
-            str.append(todo.toString()).append("\n");
+        for(int i = 0; i < this.todos.size(); i++) {
+            str.append(this.todos.get(i).toString());
+
+            if(i < this.todos.size() - 1) {
+                str.append("\n");
+            }
         }
 
         return str.toString();
@@ -59,6 +66,15 @@ public class TodoList {
         List<String> allLines = Files.readAllLines(path, StandardCharsets.UTF_8);
         String linesString = String.join("\n", allLines);
 
-        return TodoListParser.parseMarkdown(linesString);
+        TodoList parsedTodoList = TodoListParser.parseMarkdown(linesString);
+        parsedTodoList.markdownFile = filePath;
+
+        return parsedTodoList;
+    }
+
+    public void saveToFile() throws IOException {
+        PrintWriter writer = new PrintWriter(this.markdownFile, StandardCharsets.UTF_8);
+        writer.print(this);
+        writer.close();
     }
 }
