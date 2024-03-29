@@ -87,6 +87,9 @@ public class MainUI extends JFrame {
 
         tabPanel.validate();
         tabPanel.repaint();
+
+        tabbedPane1.revalidate();
+        tabbedPane1.repaint();
     }
 
     public String getSelectedTabTitle() {
