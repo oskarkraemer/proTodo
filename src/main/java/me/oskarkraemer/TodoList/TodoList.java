@@ -40,6 +40,10 @@ public class TodoList {
         return todos;
     }
 
+    public void setTodo(int index, Todo newTodo) {
+        this.todos.set(index, newTodo);
+    }
+
     public void addTodo(Todo todo) {
         this.todos.add(todo);
     }

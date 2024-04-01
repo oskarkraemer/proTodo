@@ -1,8 +1,8 @@
 package me.oskarkraemer;
 
-import me.oskarkraemer.EventListeners.TodoAddedListener;
+import me.oskarkraemer.EventListeners.TodoUpdatedListener;
 import me.oskarkraemer.EventListeners.TodoListAddedListener;
-import me.oskarkraemer.Events.TodoAddedEvent;
+import me.oskarkraemer.Events.TodoUpdatedEvent;
 import me.oskarkraemer.Todo.Todo;
 import me.oskarkraemer.TodoList.TodoList;
 
@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 
-public class UIController implements TodoAddedListener, TodoListAddedListener, SelectedTodoListGetter {
+public class UIController implements TodoUpdatedListener, TodoListAddedListener, SelectedTodoListGetter {
     private final MainUI mainUI;
     private final List<TodoList> todoLists;
 
@@ -33,29 +33,39 @@ public class UIController implements TodoAddedListener, TodoListAddedListener, S
     }
 
     @Override
-    public void todoAdded(TodoAddedEvent todoAddedEvent) {
-        Todo addedTodo = todoAddedEvent.getAddedTodo();
-        TodoList todoListAddedTo = todoAddedEvent.getTodoListAddedTo();
+    public void todoAdded(TodoUpdatedEvent todoUpdatedEvent) {
+        Todo updatedTodo = todoUpdatedEvent.getUpdatedTodo();
+        TodoList todoListUpdatedTo = todoUpdatedEvent.getTodoListUpdatedTo();
 
-        System.out.println("Added todo in list: " + todoListAddedTo.getName());
-        System.out.println(addedTodo.getDescription());
-        System.out.println(addedTodo.getDue());
-        System.out.println(addedTodo.getTimeBudget());
+        System.out.println(todoUpdatedEvent.getTodoListUpdatedTo());
+        System.out.println(updatedTodo.getDescription());
+        System.out.println(updatedTodo.getDue());
+        System.out.println(updatedTodo.getTimeBudget());
 
-        todoListAddedTo.addTodo(addedTodo);
+        for(int i = 0; i < todoListUpdatedTo.getTodos().size(); i++) {
+            Todo todo = todoListUpdatedTo.getTodos().get(i);
+            if(todo == todoUpdatedEvent.getOriginalTodo()) {
+                todoListUpdatedTo.setTodo(i, updatedTodo);
+            }
+        }
+
+        if(todoUpdatedEvent.getTodoUpdateState() == TodoUpdatedEvent.TODO_UPDATE_STATE.CREATED) {
+            todoListUpdatedTo.addTodo(updatedTodo);
+        }
+
         try {
-            todoListAddedTo.saveToFile();
+            todoListUpdatedTo.saveToFile();
         } catch (IOException exception) {
             JOptionPane.showMessageDialog(this.mainUI, "Error saving changes:\n" + exception.getMessage(),
                     "An error occurred!", JOptionPane.ERROR_MESSAGE);
         }
 
-        this.mainUI.updateTab(todoListAddedTo.getName(), new TodoListUI(todoListAddedTo.getTodos()).jpListPanel);
+        this.mainUI.updateTab(todoListUpdatedTo.getName(), new TodoListUI(todoListUpdatedTo, this).jpListPanel);
     }
 
     @Override
     public void todoListAdded(TodoList todoListAdded) {
         this.todoLists.add(todoListAdded);
-        this.mainUI.addTab(todoListAdded.getName(), new TodoListUI(todoListAdded.getTodos()).jpListPanel);
+        this.mainUI.addTab(todoListAdded.getName(), new TodoListUI(todoListAdded, this).jpListPanel);
     }
 }

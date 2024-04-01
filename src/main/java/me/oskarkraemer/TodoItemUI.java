@@ -1,8 +1,12 @@
 package me.oskarkraemer;
 
+import me.oskarkraemer.EventListeners.TodoUpdatedListener;
 import me.oskarkraemer.Todo.Todo;
+import me.oskarkraemer.TodoList.TodoList;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -16,9 +20,16 @@ public class TodoItemUI extends JFrame {
     private JLabel jlTodoDueWords;
     private JLabel jlTodoCreated;
     private JLabel jlTodoTimeBudget;
-    private JButton button1;
+    private JButton jbEditTodo;
 
-    public TodoItemUI(Todo todo) {
+    public TodoItemUI(Todo todo, TodoList belongingTodoList, TodoUpdatedListener todoUpdatedListener) {
+        this.jbEditTodo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AddTodoUI(todoUpdatedListener, null, belongingTodoList, todo);
+            }
+        });
+
         this.updateUI(todo);
     }
 

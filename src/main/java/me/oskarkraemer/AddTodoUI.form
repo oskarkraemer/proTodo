@@ -80,7 +80,7 @@
               <text value="Description *"/>
             </properties>
           </component>
-          <component id="564de" class="javax.swing.JLabel">
+          <component id="564de" class="javax.swing.JLabel" binding="jlHeading">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -166,7 +166,7 @@
               <visible value="false"/>
             </properties>
           </component>
-          <component id="b330e" class="javax.swing.JLabel">
+          <component id="b330e" class="javax.swing.JLabel" binding="jlTodoList">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>

@@ -1,8 +1,8 @@
 package me.oskarkraemer;
 
 import com.raven.datechooser.DateChooser;
-import me.oskarkraemer.EventListeners.TodoAddedListener;
-import me.oskarkraemer.Events.TodoAddedEvent;
+import me.oskarkraemer.EventListeners.TodoUpdatedListener;
+import me.oskarkraemer.Events.TodoUpdatedEvent;
 import me.oskarkraemer.Todo.Todo;
 import me.oskarkraemer.TodoList.TodoList;
 
@@ -10,12 +10,15 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Pattern;
 
 public class AddTodoUI extends JDialog {
-    private final TodoAddedListener todoAddedListener;
+    private final TodoUpdatedListener todoUpdatedListener;
     private final List<TodoList> todoLists;
+    private final TodoList selectedTodoList;
+    private final Todo todoEditing;
 
     private final Pattern TWELVE_HOUR_PATTERN = Pattern.compile("^(1[0-2]|0?[1-9]):[0-5][0-9]$");
     private final Pattern TWENTYFOUR_HOUR_PATTERN = Pattern.compile("^([01][0-9]|2[0-3]):([0-5][0-9])$");
@@ -31,6 +34,8 @@ public class AddTodoUI extends JDialog {
     private JLabel jlErrorMessage;
     private JComboBox<String> jcbTodoList;
     private JCheckBox jcbIncludeCreationDate;
+    private JLabel jlTodoList;
+    private JLabel jlHeading;
     private final DateChooser dcDateChooser;
 
     private enum ADD_TODO_STATUS {
@@ -41,9 +46,15 @@ public class AddTodoUI extends JDialog {
     }
 
 
-    public AddTodoUI(TodoAddedListener todoAddedListener, List<TodoList> todoLists, TodoList selectedTodoList) {
-        this.todoAddedListener = todoAddedListener;
+    public AddTodoUI(TodoUpdatedListener todoUpdatedListener, List<TodoList> todoLists, TodoList selectedTodoList) {
+        this(todoUpdatedListener, todoLists, selectedTodoList, null);
+    }
+
+    public AddTodoUI(TodoUpdatedListener todoUpdatedListener, List<TodoList> todoLists, TodoList selectedTodoList, Todo todoEditing) {
+        this.todoUpdatedListener = todoUpdatedListener;
         this.todoLists = todoLists;
+        this.selectedTodoList = selectedTodoList;
+        this.todoEditing = todoEditing;
 
         setContentPane(contentPane);
         setModal(true);
@@ -56,13 +67,35 @@ public class AddTodoUI extends JDialog {
         dcDateChooser.setTextField(jtfDue);
         dcDateChooser.clearDate();
 
-        //Add all available to-do lists
-        for(TodoList todoList : todoLists) {
-            jcbTodoList.addItem(todoList.getName());
+        if(todoLists == null) {
+            jcbTodoList.setVisible(false);
+            jlTodoList.setVisible(false);
+
+            jlHeading.setText("Edit ToDo");
+            setTitle("Edit Todo");
+            buttonADD.setText("Edit");
+        } else {
+            //Add all available to-do lists
+            for (TodoList todoList : todoLists) {
+                jcbTodoList.addItem(todoList.getName());
+            }
+
+            //Select the currently selected to-do list panel
+            jcbTodoList.setSelectedItem(selectedTodoList.getName());
         }
 
-        //Select the currently selected to-do list panel
-        jcbTodoList.setSelectedItem(selectedTodoList.getName());
+        //Fill out existing to-do if editing
+        if(todoEditing != null) {
+            this.jtfDescription.setText(todoEditing.getDescription());
+
+            LocalDateTime todoEditingDue = todoEditing.getDue();
+            if(todoEditingDue != null) {
+                this.dcDateChooser.setSelectedDate(todoEditingDue.getDayOfMonth(), todoEditingDue.getMonthValue(), todoEditingDue.getYear());
+                this.jtfDueTime.setText(todoEditingDue.format(DateTimeFormatter.ofPattern("HH:mm")));
+            }
+
+            this.jtfTimeBudget.setText(Integer.toString(todoEditing.getTimeBudget()));
+        }
 
         buttonADD.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -138,7 +171,7 @@ public class AddTodoUI extends JDialog {
                 .createdAt(this.jcbIncludeCreationDate.isSelected() ? LocalDateTime.now() : null)
                 .build();
 
-        this.todoAddedListener.todoAdded(new TodoAddedEvent(addedTodo, this.todoLists.get(this.jcbTodoList.getSelectedIndex())));
+        this.todoUpdatedListener.todoAdded(new TodoUpdatedEvent(this.todoEditing, addedTodo, this.todoLists != null ? this.todoLists.get(this.jcbTodoList.getSelectedIndex()) : this.selectedTodoList, this.todoLists == null ? TodoUpdatedEvent.TODO_UPDATE_STATE.CHANGED : TodoUpdatedEvent.TODO_UPDATE_STATE.CREATED));
         dispose();
 
         return ADD_TODO_STATUS.OK;

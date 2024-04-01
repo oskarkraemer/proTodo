@@ -1,6 +1,6 @@
 package me.oskarkraemer;
 
-import me.oskarkraemer.EventListeners.TodoAddedListener;
+import me.oskarkraemer.EventListeners.TodoUpdatedListener;
 import me.oskarkraemer.EventListeners.TodoListAddedListener;
 import me.oskarkraemer.TodoList.TodoList;
 
@@ -100,11 +100,11 @@ public class MainUI extends JFrame {
         tabbedPane1 = new JTabbedPane();
     }
 
-    public void initAddTodoModal(TodoAddedListener todoAddedListener, TodoListAddedListener todoListAddedListener, List<TodoList> todoLists, SelectedTodoListGetter selectedTodoListGetter) {
+    public void initAddTodoModal(TodoUpdatedListener todoUpdatedListener, TodoListAddedListener todoListAddedListener, List<TodoList> todoLists, SelectedTodoListGetter selectedTodoListGetter) {
         this.jbNewTodo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddTodoUI(todoAddedListener, todoLists, selectedTodoListGetter.getSelectedTodoList());
+                new AddTodoUI(todoUpdatedListener, todoLists, selectedTodoListGetter.getSelectedTodoList());
             }
         });
 
