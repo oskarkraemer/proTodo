@@ -1,6 +1,7 @@
 package me.oskarkraemer;
 
 import me.oskarkraemer.EventListeners.TodoUpdatedListener;
+import me.oskarkraemer.Events.TodoUpdatedEvent;
 import me.oskarkraemer.Todo.Todo;
 import me.oskarkraemer.TodoList.TodoList;
 
@@ -31,6 +32,18 @@ public class TodoItemUI extends JFrame {
         });
 
         this.updateUI(todo);
+        jcbTodoCheckbox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Todo newTodo = new Todo.TodoBuilder(todo.getDescription())
+                        .completed(!todo.isCompleted())
+                        .due(todo.getDue())
+                        .createdAt(todo.getCreatedAt())
+                        .timeBudget(todo.getTimeBudget())
+                        .build();
+                todoUpdatedListener.todoUpdated(new TodoUpdatedEvent(todo, newTodo, belongingTodoList, TodoUpdatedEvent.TODO_UPDATE_STATE.CHANGED));
+            }
+        });
     }
 
     public void updateUI(Todo todo) {
