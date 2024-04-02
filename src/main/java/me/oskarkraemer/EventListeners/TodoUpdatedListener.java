@@ -5,5 +5,5 @@ import me.oskarkraemer.Events.TodoUpdatedEvent;
 import java.util.EventListener;
 
 public interface TodoUpdatedListener extends EventListener {
-    void todoAdded(TodoUpdatedEvent todoUpdatedEvent);
+    void todoUpdated(TodoUpdatedEvent todoUpdatedEvent);
 }

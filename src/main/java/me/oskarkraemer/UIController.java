@@ -33,7 +33,7 @@ public class UIController implements TodoUpdatedListener, TodoListAddedListener,
     }
 
     @Override
-    public void todoAdded(TodoUpdatedEvent todoUpdatedEvent) {
+    public void todoUpdated(TodoUpdatedEvent todoUpdatedEvent) {
         Todo updatedTodo = todoUpdatedEvent.getUpdatedTodo();
         TodoList todoListUpdatedTo = todoUpdatedEvent.getTodoListUpdatedTo();
 
