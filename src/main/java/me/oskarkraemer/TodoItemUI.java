@@ -30,8 +30,6 @@ public class TodoItemUI extends JFrame {
                 new AddTodoUI(todoUpdatedListener, null, belongingTodoList, todo);
             }
         });
-
-        this.updateUI(todo);
         jcbTodoCheckbox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,6 +42,8 @@ public class TodoItemUI extends JFrame {
                 todoUpdatedListener.todoUpdated(new TodoUpdatedEvent(todo, newTodo, belongingTodoList, TodoUpdatedEvent.TODO_UPDATE_STATE.CHANGED));
             }
         });
+
+        this.updateUI(todo);
     }
 
     public void updateUI(Todo todo) {
