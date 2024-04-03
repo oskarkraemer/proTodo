@@ -1,7 +1,9 @@
 package me.oskarkraemer;
 
 import me.oskarkraemer.EventListeners.TodoUpdatedListener;
-import me.oskarkraemer.EventListeners.TodoListAddedListener;
+import me.oskarkraemer.EventListeners.TodoListUpdatedListener;
+import me.oskarkraemer.Events.TodoListUpdatedEvent;
+import me.oskarkraemer.Events.UPDATE_STATE;
 import me.oskarkraemer.TodoList.TodoList;
 
 import javax.swing.*;
@@ -100,7 +102,7 @@ public class MainUI extends JFrame {
         tabbedPane1 = new JTabbedPane();
     }
 
-    public void initAddTodoModal(TodoUpdatedListener todoUpdatedListener, TodoListAddedListener todoListAddedListener, List<TodoList> todoLists, SelectedTodoListGetter selectedTodoListGetter) {
+    public void initAddTodoModal(TodoUpdatedListener todoUpdatedListener, TodoListUpdatedListener todoListUpdatedListener, List<TodoList> todoLists, SelectedTodoListGetter selectedTodoListGetter) {
         this.jbNewTodo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -118,7 +120,7 @@ public class MainUI extends JFrame {
                 int result = fileChooser.showOpenDialog(jpMainPanel);
                 if(result == JFileChooser.APPROVE_OPTION) {
                     try {
-                        todoListAddedListener.todoListAdded(TodoList.readFromFile(fileChooser.getSelectedFile().getAbsolutePath()));
+                        todoListUpdatedListener.todoListUpdated(new TodoListUpdatedEvent(null, TodoList.readFromFile(fileChooser.getSelectedFile().getAbsolutePath()), UPDATE_STATE.CREATED));
                     } catch (Exception exception) {
                         JOptionPane.showMessageDialog(jpMainPanel, "Error reading ToDo list file:\n" + exception.getMessage(),
                                 "An error occurred!", JOptionPane.ERROR_MESSAGE);

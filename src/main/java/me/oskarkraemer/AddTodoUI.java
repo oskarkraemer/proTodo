@@ -3,6 +3,7 @@ package me.oskarkraemer;
 import com.raven.datechooser.DateChooser;
 import me.oskarkraemer.EventListeners.TodoUpdatedListener;
 import me.oskarkraemer.Events.TodoUpdatedEvent;
+import me.oskarkraemer.Events.UPDATE_STATE;
 import me.oskarkraemer.Todo.Todo;
 import me.oskarkraemer.TodoList.TodoList;
 
@@ -171,7 +172,7 @@ public class AddTodoUI extends JDialog {
                 .createdAt(this.jcbIncludeCreationDate.isSelected() ? LocalDateTime.now() : null)
                 .build();
 
-        this.todoUpdatedListener.todoUpdated(new TodoUpdatedEvent(this.todoEditing, addedTodo, this.todoLists != null ? this.todoLists.get(this.jcbTodoList.getSelectedIndex()) : this.selectedTodoList, this.todoLists == null ? TodoUpdatedEvent.TODO_UPDATE_STATE.CHANGED : TodoUpdatedEvent.TODO_UPDATE_STATE.CREATED));
+        this.todoUpdatedListener.todoUpdated(new TodoUpdatedEvent(this.todoEditing, addedTodo, this.todoLists != null ? this.todoLists.get(this.jcbTodoList.getSelectedIndex()) : this.selectedTodoList, this.todoLists == null ? UPDATE_STATE.CHANGED : UPDATE_STATE.CREATED));
         dispose();
 
         return ADD_TODO_STATUS.OK;

@@ -1,8 +1,10 @@
 package me.oskarkraemer;
 
 import me.oskarkraemer.EventListeners.TodoUpdatedListener;
-import me.oskarkraemer.EventListeners.TodoListAddedListener;
+import me.oskarkraemer.EventListeners.TodoListUpdatedListener;
+import me.oskarkraemer.Events.TodoListUpdatedEvent;
 import me.oskarkraemer.Events.TodoUpdatedEvent;
+import me.oskarkraemer.Events.UPDATE_STATE;
 import me.oskarkraemer.Todo.Todo;
 import me.oskarkraemer.TodoList.TodoList;
 
@@ -10,7 +12,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 
-public class UIController implements TodoUpdatedListener, TodoListAddedListener, SelectedTodoListGetter {
+public class UIController implements TodoUpdatedListener, TodoListUpdatedListener, SelectedTodoListGetter {
     private final MainUI mainUI;
     private final List<TodoList> todoLists;
 
@@ -49,7 +51,7 @@ public class UIController implements TodoUpdatedListener, TodoListAddedListener,
             }
         }
 
-        if(todoUpdatedEvent.getTodoUpdateState() == TodoUpdatedEvent.TODO_UPDATE_STATE.CREATED) {
+        if(todoUpdatedEvent.getTodoUpdateState() == UPDATE_STATE.CREATED) {
             todoListUpdatedTo.addTodo(updatedTodo);
         }
 
@@ -64,8 +66,11 @@ public class UIController implements TodoUpdatedListener, TodoListAddedListener,
     }
 
     @Override
-    public void todoListAdded(TodoList todoListAdded) {
-        this.todoLists.add(todoListAdded);
-        this.mainUI.addTab(todoListAdded.getName(), new TodoListUI(todoListAdded, this).jpListPanel);
+    public void todoListUpdated(TodoListUpdatedEvent todoListUpdatedEvent) {
+        if(todoListUpdatedEvent.getTodoListUpdateState() == UPDATE_STATE.CREATED) {
+            TodoList addedTodoList = todoListUpdatedEvent.getUpdatedTodoList();
+            this.todoLists.add(addedTodoList);
+            this.mainUI.addTab(addedTodoList.getName(), new TodoListUI(addedTodoList, this).jpListPanel);
+        }
     }
 }

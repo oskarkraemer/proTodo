@@ -2,6 +2,7 @@ package me.oskarkraemer;
 
 import me.oskarkraemer.EventListeners.TodoUpdatedListener;
 import me.oskarkraemer.Events.TodoUpdatedEvent;
+import me.oskarkraemer.Events.UPDATE_STATE;
 import me.oskarkraemer.Todo.Todo;
 import me.oskarkraemer.TodoList.TodoList;
 
@@ -39,7 +40,7 @@ public class TodoItemUI extends JFrame {
                         .createdAt(todo.getCreatedAt())
                         .timeBudget(todo.getTimeBudget())
                         .build();
-                todoUpdatedListener.todoUpdated(new TodoUpdatedEvent(todo, newTodo, belongingTodoList, TodoUpdatedEvent.TODO_UPDATE_STATE.CHANGED));
+                todoUpdatedListener.todoUpdated(new TodoUpdatedEvent(todo, newTodo, belongingTodoList, UPDATE_STATE.CHANGED));
             }
         });
 
