@@ -103,10 +103,10 @@ public class MainUI extends JFrame {
     }
 
     public void initAddTodoModal(TodoUpdatedListener todoUpdatedListener, TodoListUpdatedListener todoListUpdatedListener, List<TodoList> todoLists, SelectedTodoListGetter selectedTodoListGetter) {
-        this.jbNewTodo.addActionListener(new ActionListener() {
+        this.jbNewList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddTodoUI(todoUpdatedListener, todoLists, selectedTodoListGetter.getSelectedTodoList());
+                new NewTodoListUI(todoListUpdatedListener);
             }
         });
 
@@ -126,6 +126,12 @@ public class MainUI extends JFrame {
                                 "An error occurred!", JOptionPane.ERROR_MESSAGE);
                     }
                 }
+            }
+        });
+        this.jbNewTodo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AddTodoUI(todoUpdatedListener, todoLists, selectedTodoListGetter.getSelectedTodoList());
             }
         });
     }

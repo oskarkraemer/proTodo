@@ -55,12 +55,7 @@ public class UIController implements TodoUpdatedListener, TodoListUpdatedListene
             todoListUpdatedTo.addTodo(updatedTodo);
         }
 
-        try {
-            todoListUpdatedTo.saveToFile();
-        } catch (IOException exception) {
-            JOptionPane.showMessageDialog(this.mainUI, "Error saving changes:\n" + exception.getMessage(),
-                    "An error occurred!", JOptionPane.ERROR_MESSAGE);
-        }
+        trySaveTodoList(todoListUpdatedTo);
 
         this.mainUI.updateTab(todoListUpdatedTo.getName(), new TodoListUI(todoListUpdatedTo, this).jpListPanel);
     }
@@ -69,8 +64,25 @@ public class UIController implements TodoUpdatedListener, TodoListUpdatedListene
     public void todoListUpdated(TodoListUpdatedEvent todoListUpdatedEvent) {
         if(todoListUpdatedEvent.getTodoListUpdateState() == UPDATE_STATE.CREATED) {
             TodoList addedTodoList = todoListUpdatedEvent.getUpdatedTodoList();
+
+            if(!addedTodoList.getMarkdownFile().isEmpty()) {
+                if(!trySaveTodoList(addedTodoList)) throw new RuntimeException("ToDo list could not be created");
+            }
+
             this.todoLists.add(addedTodoList);
             this.mainUI.addTab(addedTodoList.getName(), new TodoListUI(addedTodoList, this).jpListPanel);
+        }
+    }
+
+    private boolean trySaveTodoList(TodoList todoList) {
+        try {
+            todoList.saveToFile();
+            return true;
+        } catch (IOException exception) {
+            JOptionPane.showMessageDialog(this.mainUI, "Error saving changes:\n" + exception.getMessage(),
+                    "An error occurred!", JOptionPane.ERROR_MESSAGE);
+
+            return false;
         }
     }
 }

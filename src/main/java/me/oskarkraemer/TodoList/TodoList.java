@@ -48,6 +48,10 @@ public class TodoList {
         this.todos.add(todo);
     }
 
+    public String getMarkdownFile() {
+        return this.markdownFile;
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder(String.format("# ToDo: %s\n## List\n", this.name));

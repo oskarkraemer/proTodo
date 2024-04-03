@@ -1,26 +1,31 @@
 package me.oskarkraemer;
 
 import me.oskarkraemer.EventListeners.TodoListUpdatedListener;
-import me.oskarkraemer.EventListeners.TodoUpdatedListener;
-import me.oskarkraemer.Todo.Todo;
+import me.oskarkraemer.Events.TodoListUpdatedEvent;
+import me.oskarkraemer.Events.UPDATE_STATE;
 import me.oskarkraemer.TodoList.TodoList;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.*;
-import java.util.List;
+import java.io.File;
+
 public class NewTodoListUI extends JDialog {
     private TodoListUpdatedListener todoListUpdatedListener;
-    private JPanel contentPane;
+    private JPanel jpMainPanel;
     private JButton buttonADD;
     private JButton buttonCancel;
     private JLabel jlErrorMessage;
     private JButton jbSelectFile;
     private JTextField jtfIntervalDays;
+    private JTextField jtfListName;
+
+    private File fileToSave;
 
     public NewTodoListUI(TodoListUpdatedListener todoListUpdatedListener) {
         this.todoListUpdatedListener = todoListUpdatedListener;
 
-        setContentPane(contentPane);
+        setContentPane(jpMainPanel);
         setModal(true);
         setLocationRelativeTo(null);
         setTitle("New Todo list");
@@ -39,6 +44,21 @@ public class NewTodoListUI extends JDialog {
             }
         });
 
+        jbSelectFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(new FileNameExtensionFilter("Markdown file", "md"));
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
+                int result = fileChooser.showSaveDialog(jpMainPanel);
+                if(result == JFileChooser.APPROVE_OPTION) {
+                    fileToSave = fileChooser.getSelectedFile();
+                    jbSelectFile.setText(fileToSave.getAbsolutePath());
+                }
+            }
+        });
+
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -48,7 +68,7 @@ public class NewTodoListUI extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        jpMainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
@@ -59,7 +79,11 @@ public class NewTodoListUI extends JDialog {
     }
 
     private void tryAdd() {
-
+        TodoList newTodoList = new TodoList(jtfListName.getText(), fileToSave.getAbsolutePath());
+        try {
+            todoListUpdatedListener.todoListUpdated(new TodoListUpdatedEvent(null, newTodoList, UPDATE_STATE.CREATED));
+            dispose();
+        } catch (RuntimeException ignored) {}
     }
 
     private void onCancel() {
