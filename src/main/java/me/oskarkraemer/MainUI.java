@@ -102,14 +102,13 @@ public class MainUI extends JFrame {
         tabbedPane1 = new JTabbedPane();
     }
 
-    public void initAddTodoModal(TodoUpdatedListener todoUpdatedListener, TodoListUpdatedListener todoListUpdatedListener, List<TodoList> todoLists, SelectedTodoListGetter selectedTodoListGetter) {
+    public void initUICallbacks(TodoUpdatedListener todoUpdatedListener, TodoListUpdatedListener todoListUpdatedListener, List<TodoList> todoLists, SelectedTodoListGetter selectedTodoListGetter) {
         this.jbNewList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new NewTodoListUI(todoListUpdatedListener);
             }
         });
-
         this.jbOpenList.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

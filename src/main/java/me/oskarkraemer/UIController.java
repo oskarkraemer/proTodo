@@ -20,7 +20,7 @@ public class UIController implements TodoUpdatedListener, TodoListUpdatedListene
         this.todoLists = todoLists;
         this.mainUI = mainUI;
 
-        this.mainUI.initAddTodoModal(this, this, todoLists, this);
+        this.mainUI.initUICallbacks(this, this, todoLists, this);
     }
 
     public TodoList getSelectedTodoList() {
