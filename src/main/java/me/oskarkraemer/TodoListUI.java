@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TodoListUI extends JFrame {
-    public JPanel jpListPanel;
+    private JPanel jpListPanel;
 
     private TodoList todoList;
 
@@ -28,5 +28,9 @@ public class TodoListUI extends JFrame {
             todoItemUIS.add(todoItemUI);
             jpListPanel.add(todoItemUIS.get(i).getTodoItemPanel(), 0, i);
         }
+    }
+
+    public JPanel getTodoListPanel() {
+        return this.jpListPanel;
     }
 }

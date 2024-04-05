@@ -57,7 +57,7 @@ public class UIController implements TodoUpdatedListener, TodoListUpdatedListene
 
         trySaveTodoList(todoListUpdatedTo);
 
-        this.mainUI.updateTab(todoListUpdatedTo.getName(), new TodoListUI(todoListUpdatedTo, this).jpListPanel);
+        this.mainUI.updateTab(todoListUpdatedTo.getName(), new TodoListUI(todoListUpdatedTo, this).getTodoListPanel());
     }
 
     @Override
@@ -70,7 +70,7 @@ public class UIController implements TodoUpdatedListener, TodoListUpdatedListene
             }
 
             this.todoLists.add(addedTodoList);
-            this.mainUI.addTab(addedTodoList.getName(), new TodoListUI(addedTodoList, this).jpListPanel);
+            this.mainUI.addTab(addedTodoList.getName(), new TodoListUI(addedTodoList, this).getTodoListPanel());
         }
     }
 
