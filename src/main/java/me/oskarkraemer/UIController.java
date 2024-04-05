@@ -62,15 +62,21 @@ public class UIController implements TodoUpdatedListener, TodoListUpdatedListene
 
     @Override
     public void todoListUpdated(TodoListUpdatedEvent todoListUpdatedEvent) {
-        if(todoListUpdatedEvent.getTodoListUpdateState() == UPDATE_STATE.CREATED) {
-            TodoList addedTodoList = todoListUpdatedEvent.getUpdatedTodoList();
+        switch (todoListUpdatedEvent.getTodoListUpdateState()) {
+            case CREATED -> {
+                TodoList addedTodoList = todoListUpdatedEvent.getUpdatedTodoList();
 
-            if(!addedTodoList.getMarkdownFile().isEmpty()) {
-                if(!trySaveTodoList(addedTodoList)) throw new RuntimeException("ToDo list could not be created");
+                if (!addedTodoList.getMarkdownFile().isEmpty()) {
+                    if (!trySaveTodoList(addedTodoList)) throw new RuntimeException("ToDo list could not be created");
+                }
+
+                this.todoLists.add(addedTodoList);
+                this.mainUI.addTab(addedTodoList.getName(), new TodoListUI(addedTodoList, this).getTodoListPanel(), this, this);
             }
 
-            this.todoLists.add(addedTodoList);
-            this.mainUI.addTab(addedTodoList.getName(), new TodoListUI(addedTodoList, this).getTodoListPanel());
+            case DELETED -> {
+                this.todoLists.remove(todoListUpdatedEvent.getOriginalTodoList());
+            }
         }
     }
 

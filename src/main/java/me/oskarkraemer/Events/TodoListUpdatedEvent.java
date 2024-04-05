@@ -21,4 +21,6 @@ public class TodoListUpdatedEvent {
     public TodoList getUpdatedTodoList() {
         return updatedTodoList;
     }
+
+    public TodoList getOriginalTodoList() { return originalTodoList; }
 }

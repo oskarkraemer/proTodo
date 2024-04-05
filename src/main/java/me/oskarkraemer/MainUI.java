@@ -44,7 +44,7 @@ public class MainUI extends JFrame {
         this.tabsPanels = new HashMap<>();
     }
 
-    public void addTab(String title, JPanel content) {
+    public void addTab(String title, JPanel content, TodoListUpdatedListener todoListUpdatedListener, SelectedTodoListGetter selectedTodoListGetter) {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
@@ -61,6 +61,7 @@ public class MainUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int index = tabbedPane1.indexOfComponent(panel);
                 if (index != -1) {
+                    todoListUpdatedListener.todoListUpdated(new TodoListUpdatedEvent(selectedTodoListGetter.getSelectedTodoList(), null, UPDATE_STATE.DELETED));
                     tabbedPane1.removeTabAt(index);
                 }
 
@@ -95,7 +96,8 @@ public class MainUI extends JFrame {
     }
 
     public String getSelectedTabTitle() {
-        return tabbedPane1.getTitleAt(tabbedPane1.getSelectedIndex());
+        int selectedIndex = tabbedPane1.getSelectedIndex();
+        return tabbedPane1.getTitleAt(Math.max(0, selectedIndex));
     }
 
     private void createUIComponents() {
